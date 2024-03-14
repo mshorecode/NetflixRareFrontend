@@ -1,8 +1,12 @@
 {
-  "name": "next-firebase-starter",
+  "name": "Netflix Rare",
   "private": true,
   "version": "1.0.0",
-  "author": "Trinity Christiana",
+  "author": "Ryan Shore",
+  "contributors" : [
+    "Courtney Fairall",
+    "Keana Cobarde"
+  ], 
   "scripts": {
     "dev": "next dev",
     "build": "next build",
