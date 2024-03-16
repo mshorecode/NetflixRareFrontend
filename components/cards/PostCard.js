@@ -10,6 +10,7 @@ import {
   CardTitle,
   Image,
 } from 'react-bootstrap';
+import moment from 'moment';
 import getCategoryById from '../../api/categoryApi';
 import getUserById from '../../api/userApi';
 
@@ -22,18 +23,20 @@ function PostCard({ post }) {
     getCategoryById(post?.category_Id).then(setCategory);
   }, []);
 
+  const formattedDate = moment(post.publication_Date).format('LL');
+
   return (
     <Card>
       {post.image_Url ? (<Image src={post.image_Url} />) : ''}
       <CardHeader>
         <CardTitle>{post.title}</CardTitle>
-        <CardText>{author.first_name}{author.last_name}</CardText>
-        <Badge>{category.title}</Badge>
+        <CardText>{author.first_Name}{author.last_Name}</CardText>
+        <Badge>{category.label}</Badge>
       </CardHeader>
       <CardBody>
         <CardText>{post.content}</CardText>
         {post.approved ? (<Badge>Approved</Badge>) : ''}
-        <CardText>{post.publication_Date}</CardText>
+        <CardText>{formattedDate}</CardText>
       </CardBody>
     </Card>
   );
