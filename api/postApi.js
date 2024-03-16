@@ -8,8 +8,7 @@ const getAllPosts = () => new Promise((resolve, reject) => {
     headers: {
       'Content-Type': 'application/json',
     },
-  }).then((response) => response.json())
-    .then((data) => resolve(data))
+  }).then((resp) => resolve(resp.json()))
     .catch(reject);
 });
 

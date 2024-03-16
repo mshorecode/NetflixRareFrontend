@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react';
 import PostCard from '../components/cards/PostCard';
 import { getAllPosts } from '../api/postApi';
 
-function PostFeed() {
+export default function PostFeed() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     getAllPosts().then(setPosts);
+    console.warn(posts);
   }, []);
 
   return (
@@ -17,5 +18,3 @@ function PostFeed() {
     </>
   );
 }
-
-export default PostFeed;

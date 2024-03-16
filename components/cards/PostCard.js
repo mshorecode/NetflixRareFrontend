@@ -4,7 +4,6 @@ import {
   Badge,
   Card,
   CardBody,
-  CardFooter,
   CardHeader,
   CardText,
   CardTitle,
@@ -13,29 +12,28 @@ import {
 import getCategoryById from '../../api/categoryApi';
 import getUserById from '../../api/userApi';
 
-export default function PostCard({ post }) {
+function PostCard({ post }) {
   const [author, setAuthor] = useState({});
   const [category, setCategory] = useState({});
 
   useEffect(() => {
-    getUserById(post.author_Id).then(setAuthor);
-    getCategoryById(post.category_Id).then(setCategory);
+    getUserById(post?.user_Id).then(setAuthor);
+    getCategoryById(post?.category_Id).then(setCategory);
   }, []);
 
   return (
     <Card>
-      ({post.image_Url} ? <Image src={post.image_Url} />)
+      {post.image_Url ? (<Image src={post.image_Url} />) : ''}
       <CardHeader>
         <CardTitle>{post.title}</CardTitle>
-        <CardText>{author}</CardText>
-        <Badge>{category}</Badge>
+        <CardText>{author.first_name}{author.last_name}</CardText>
+        <Badge>{category.title}</Badge>
       </CardHeader>
       <CardBody>
         <CardText>{post.content}</CardText>
+        {post.approved ? (<Badge>Approved</Badge>) : ''}
+        <CardText>{post.publication_Date}</CardText>
       </CardBody>
-      <CardFooter>
-        ({post.approved} ? <Badge>Approved</Badge>)<CardText>{post.publication_Date}</CardText>
-      </CardFooter>
     </Card>
   );
 }
@@ -43,7 +41,7 @@ export default function PostCard({ post }) {
 PostCard.propTypes = {
   post: PropTypes.shape({
     id: PropTypes.number,
-    author_Id: PropTypes.number,
+    user_Id: PropTypes.number,
     category_Id: PropTypes.number,
     publication_Date: PropTypes.instanceOf(Date),
     title: PropTypes.string,
@@ -52,3 +50,5 @@ PostCard.propTypes = {
     approved: PropTypes.bool,
   }).isRequired,
 };
+
+export default PostCard;
