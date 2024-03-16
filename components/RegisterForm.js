@@ -17,9 +17,11 @@ function RegisterForm({ updateUser }) {
     profile_Image_Url: user.fbUser.photoUrl,
     created_On: new Date().toLocaleDateString(),
     active: true,
-    is_Staff: true,
+    is_Staff: false,
     uid: user.uid,
   });
+
+  console.warn(user);
 
   useEffect(() => {
     if (user.uid) setFormData(user);
@@ -70,6 +72,7 @@ RegisterForm.propTypes = {
     first_Name: PropTypes.string,
     last_Name: PropTypes.string,
     bio: PropTypes.string,
+    fbUser: PropTypes.shape({}),
     profile_Image_Url: PropTypes.string,
     email: PropTypes.string,
     created_On: PropTypes.instanceOf(Date),
