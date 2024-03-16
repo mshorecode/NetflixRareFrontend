@@ -14,9 +14,7 @@ function Home() {
   };
 
   useEffect(() => {
-    checkUser(user.uid).then((data) => {
-      setAuthUser(data).console.log(authUser);
-    });
+    checkUser(user.uid).then(setAuthUser);
   }, []);
 
   return (
