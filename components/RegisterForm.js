@@ -21,8 +21,6 @@ function RegisterForm({ updateUser }) {
     uid: user.uid,
   });
 
-  console.warn(user);
-
   useEffect(() => {
     if (user.uid) setFormData(user);
   }, []);

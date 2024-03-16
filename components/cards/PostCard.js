@@ -11,7 +11,7 @@ import {
 } from 'react-bootstrap';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import moment from 'moment';
-import getCategoryById from '../../api/categoryApi';
+import { getCategoryById } from '../../api/categoryApi';
 import getUserById from '../../api/userApi';
 
 function PostCard({ post }) {
