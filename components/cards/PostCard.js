@@ -8,7 +8,7 @@ import {
   CardText,
   CardTitle,
   Image,
-} from 'react-bootstrap/esm';
+} from 'react-bootstrap';
 import getCategoryById from '../../api/categoryApi';
 import getUserById from '../../api/userApi';
 
