@@ -19,11 +19,12 @@ function Home() {
 
   return (
     <>
-      { authUser.uid === user.uid ? (
+      {authUser.uid === user.uid ? (
         <div className="flex mt-12">
           <h1 className="font-semibold fs-3">Welcome {user.first_Name}</h1>
         </div>
-      ) : (<RegisterForm user={user} updateUser={onUpdate} />
+      ) : (
+        <RegisterForm user={user} updateUser={onUpdate} />
       )}
     </>
   );
