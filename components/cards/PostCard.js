@@ -13,6 +13,7 @@ import {
 import moment from 'moment';
 import getCategoryById from '../../api/categoryApi';
 import getUserById from '../../api/userApi';
+import Reactions from '../Reactions';
 
 function PostCard({ post }) {
   const [author, setAuthor] = useState({});
@@ -37,6 +38,7 @@ function PostCard({ post }) {
         <CardText>{post.content}</CardText>
         {post.approved ? (<Badge>Approved</Badge>) : ''}
         <CardText>{formattedDate}</CardText>
+        <Reactions />
       </CardBody>
     </Card>
   );

@@ -13,7 +13,4 @@ const getReactions = () => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-export default
-{
-  getReactions,
-};
+export default getReactions;
