@@ -7,7 +7,6 @@ export default function PostFeed() {
 
   useEffect(() => {
     getAllPosts().then(setPosts);
-    console.warn(posts);
   }, []);
 
   return (
