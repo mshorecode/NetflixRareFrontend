@@ -23,4 +23,16 @@ const getPostDetails = (id) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-export { getPostDetails, getAllPosts };
+const createPost = (payload) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/api/posts/new`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  }).then((response) => response.json())
+    .then((data) => resolve(data))
+    .catch(reject);
+});
+
+export { getPostDetails, getAllPosts, createPost };
