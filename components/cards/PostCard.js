@@ -9,29 +9,43 @@ import {
   CardText,
   CardTitle,
   Image,
+  Button,
 } from 'react-bootstrap';
 import moment from 'moment';
+import { useRouter } from 'next/router';
 import { getCategoryById } from '../../api/categoryApi';
 import getUserById from '../../api/userApi';
+import { useAuth } from '../../utils/context/authContext';
+import { deletePost } from '../../api/postApi';
 import Reactions from '../Reactions';
 
-function PostCard({ post }) {
+function PostCard({ post, onUpdate }) {
   const [author, setAuthor] = useState({});
   const [category, setCategory] = useState({});
+  const { user } = useAuth();
+  const router = useRouter();
 
   const getCatAndAuthor = () => {
     getUserById(post?.user_Id).then(setAuthor);
     getCategoryById(post?.category_Id).then(setCategory);
   };
 
+  const deleteAPost = () => {
+    if (window.confirm('Do you want to delete this post?')) {
+      deletePost(post.id).then(() => onUpdate());
+    }
+  };
+
   useEffect(() => {
     getCatAndAuthor();
-  }, []);
+  }, [post]);
 
   const formattedDate = moment(post.publication_Date).format('LL');
 
   return (
-    <Card>
+    <Card
+      className="mb-2"
+    >
       {post.image_Url ? (<Image src={post.image_Url} />) : ''}
       <CardHeader>
         <CardTitle>{post.title}</CardTitle>
@@ -42,6 +56,12 @@ function PostCard({ post }) {
         <CardText>{post.content}</CardText>
         {post.approved ? (<Badge>Approved</Badge>) : ''}
         <CardText>{formattedDate}</CardText>
+        {user.id === author.id
+          ? (
+            <><Button onClick={() => router.push(`/post/edit/${post.id}`)}>Edit</Button>
+              <Button onClick={deleteAPost}>Delete</Button>
+            </>
+          ) : ''}
         <Reactions />
       </CardBody>
     </Card>
@@ -59,6 +79,7 @@ PostCard.propTypes = {
     image_Url: PropTypes.string,
     approved: PropTypes.bool,
   }).isRequired,
+  onUpdate: PropTypes.func.isRequired,
 };
 
 export default PostCard;
