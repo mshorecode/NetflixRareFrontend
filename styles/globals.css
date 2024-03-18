@@ -21,5 +21,30 @@ a {
 }
 
 body {
-  background-color: #88effd;
+  background-color: whitesmoke;
+}
+
+.flex {
+display: flex;
+}
+
+.flex-col-reverse {
+  flex-direction: column-reverse;	
+}
+
+.justify-evenly {
+justify-content: space-evenly;
+}
+
+.justify-center{
+justify-content: center;
+}
+
+.content-center {
+align-content: center;
+}
+
+.btn {
+  margin: 10px;
+  color: black;
 }
