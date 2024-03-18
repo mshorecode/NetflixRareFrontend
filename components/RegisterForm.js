@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { registerUser } from '../utils/auth'; // Update with path to registerUser
 import { useAuth } from '../utils/context/authContext';
 
-function RegisterForm({ updateUser }) {
+function RegisterForm() {
   const { user } = useAuth();
   const router = useRouter();
   const [formData, setFormData] = useState({
@@ -14,27 +14,21 @@ function RegisterForm({ updateUser }) {
     last_Name: '',
     email: '',
     bio: '',
-    profile_Image_Url: user.fbUser.photoUrl,
-    created_On: new Date().toLocaleDateString(),
+    profile_Image_Url: user.fbUser.photoURL,
+    created_On: new Date(),
     active: true,
     is_Staff: false,
     uid: user.uid,
   });
 
-  useEffect(() => {
-    if (user.uid) setFormData(user);
-  }, []);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    registerUser(formData)
-      .then(() => updateUser(user.uid))
-      .then(router.push('/'));
-  };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    registerUser(formData).then(router.push('/dashboard'));
   };
 
   return (
@@ -70,15 +64,13 @@ RegisterForm.propTypes = {
     first_Name: PropTypes.string,
     last_Name: PropTypes.string,
     bio: PropTypes.string,
-    fbUser: PropTypes.shape({}),
     profile_Image_Url: PropTypes.string,
     email: PropTypes.string,
-    created_On: PropTypes.instanceOf(Date),
+    created_On: PropTypes.string,
     active: PropTypes.bool,
     is_Staff: PropTypes.bool,
     uid: PropTypes.string,
   }).isRequired,
-  updateUser: PropTypes.func.isRequired,
 };
 
 export default RegisterForm;
