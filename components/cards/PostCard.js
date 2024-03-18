@@ -9,6 +9,7 @@ import {
   CardTitle,
   Image,
 } from 'react-bootstrap';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import moment from 'moment';
 import { getCategoryById } from '../../api/categoryApi';
 import getUserById from '../../api/userApi';
@@ -17,9 +18,13 @@ function PostCard({ post }) {
   const [author, setAuthor] = useState({});
   const [category, setCategory] = useState({});
 
-  useEffect(() => {
+  const getCatAndAuthor = () => {
     getUserById(post?.user_Id).then(setAuthor);
     getCategoryById(post?.category_Id).then(setCategory);
+  };
+
+  useEffect(() => {
+    getCatAndAuthor();
   }, []);
 
   const formattedDate = moment(post.publication_Date).format('LL');
@@ -29,8 +34,8 @@ function PostCard({ post }) {
       {post.image_Url ? (<Image src={post.image_Url} />) : ''}
       <CardHeader>
         <CardTitle>{post.title}</CardTitle>
-        <CardText>{author.first_Name}{author.last_Name}</CardText>
-        <Badge>{category.label}</Badge>
+        <CardText>{author?.first_Name} {author?.last_Name}</CardText>
+        <Badge>{category?.label}</Badge>
       </CardHeader>
       <CardBody>
         <CardText>{post.content}</CardText>
