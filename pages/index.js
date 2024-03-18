@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import { checkUser } from '../utils/auth';
 import { useAuth } from '../utils/context/authContext';
 import RegisterForm from '../components/RegisterForm';
 
 function Home() {
   const { user } = useAuth();
+  const router = useRouter();
   const [authUser, setAuthUser] = useState({});
+
+  useEffect(() => {
+    checkUser(user.uid).then(setAuthUser);
+  }, []);
 
   const onUpdate = () => {
     checkUser(user.uid).then((data) => {
@@ -13,21 +19,12 @@ function Home() {
     });
   };
 
-  useEffect(() => {
-    checkUser(user.uid).then(setAuthUser);
-  }, []);
+  if (authUser.uid === user.uid) {
+    router.push('/dashboard');
+    return null;
+  }
 
-  return (
-    <>
-      {authUser.uid === user.uid ? (
-        <div className="flex mt-12">
-          <h1 className="font-semibold fs-3">Welcome {user.first_Name}</h1>
-        </div>
-      ) : (
-        <RegisterForm user={user} updateUser={onUpdate} />
-      )}
-    </>
-  );
+  return <RegisterForm user={user} updateUser={onUpdate} />;
 }
 
 export default Home;
