@@ -2,6 +2,16 @@ import { clientCredentials } from '../utils/client';
 
 const endpoint = clientCredentials.databaseURL;
 
+const getAllCategories = () => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/api/categories`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).then((resp) => resolve(resp.json()))
+    .catch(reject);
+});
+
 const getCategoryById = (id) => new Promise((resolve, reject) => {
   fetch(`${endpoint}/api/categories/${id}`, {
     method: 'GET',
@@ -13,4 +23,4 @@ const getCategoryById = (id) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-export default getCategoryById;
+export { getCategoryById, getAllCategories };
