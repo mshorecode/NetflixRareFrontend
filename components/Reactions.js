@@ -26,7 +26,7 @@ function Reactions() {
           <button
             className="text-gray-800 hover:bg-gray-200 font-bold p-2 rounded transition-colors duration-300"
           >
-            <img src={reaction.image_Url} height="32px" width="32px" />
+            <img src={reaction.image_Url} height="16px" width="16px" />
           </button>
         </div>
       ))}
