@@ -4,18 +4,13 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useRouter } from 'next/router';
 import { useAuth } from '../../utils/context/authContext';
-import { createPost } from '../../api/postApi';
+import { createPost, editPost } from '../../api/postApi';
 import { getAllCategories } from '../../api/categoryApi';
 
-function PostForm() {
+function PostForm({ post }) {
   const { user } = useAuth();
   const [categories, setCategories] = useState([]);
   const router = useRouter();
-
-  useEffect(() => {
-    getAllCategories().then(setCategories);
-  }, []);
-
   const [formData, setFormData] = useState({
     publication_Date: null,
     category_Id: 0,
@@ -26,13 +21,22 @@ function PostForm() {
     user_Id: user.id,
   });
 
+  useEffect(() => {
+    getAllCategories().then(setCategories);
+    if (post?.id) setFormData(post);
+  }, [post]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const payload = {
-      ...formData,
-      publication_Date: new Date(),
-    };
-    createPost(payload).then(router.push('/feed'));
+    if (post?.id) {
+      editPost(formData).then(() => router.push('/feed'));
+    } else {
+      const payload = {
+        ...formData,
+        publication_Date: new Date(),
+      };
+      createPost(payload).then(router.push('/feed'));
+    }
   };
 
   const handleChange = (e) => {
