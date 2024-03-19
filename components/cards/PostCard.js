@@ -62,7 +62,7 @@ function PostCard({ post, onUpdate }) {
               <Button onClick={deleteAPost}>Delete</Button>
             </>
           ) : ''}
-        <Reactions />
+        <Reactions postId={post.id} />
       </CardBody>
     </Card>
   );
