@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -10,13 +11,13 @@ import {
   Image,
   Button,
 } from 'react-bootstrap';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import { getCategoryById } from '../../api/categoryApi';
 import getUserById from '../../api/userApi';
 import { useAuth } from '../../utils/context/authContext';
 import { deletePost } from '../../api/postApi';
+import Reactions from '../Reactions';
 
 function PostCard({ post, onUpdate }) {
   const [author, setAuthor] = useState({});
@@ -61,6 +62,7 @@ function PostCard({ post, onUpdate }) {
               <Button onClick={deleteAPost}>Delete</Button>
             </>
           ) : ''}
+        <Reactions />
       </CardBody>
     </Card>
   );
