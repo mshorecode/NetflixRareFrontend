@@ -45,3 +45,12 @@ align-content: center;
   margin: 10px;
   color: black;
 }
+
+.p-2 {
+  padding: 0.5rem;
+}
+
+.text-center {
+  text-align: center;
+
+}
