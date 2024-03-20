@@ -67,7 +67,6 @@ function PostCard({ post, onUpdate }) {
             {post.tags?.map((t) => (
               <TagBadge id={t.id} />
             ))}
-            <Reactions />
           </>
         ) : ''}
         <div className="flex">
@@ -81,6 +80,7 @@ function PostCard({ post, onUpdate }) {
               </ButtonGroup>
             ) : ''}
         </div>
+        <Reactions postId={post.id} postReactions={post.reactions} />
       </CardBody>
     </Card>
   );
@@ -100,6 +100,7 @@ PostCard.propTypes = {
       id: PropTypes.number,
       label: PropTypes.string,
     })),
+    reactions: PropTypes.arrayOf(),
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
 };
