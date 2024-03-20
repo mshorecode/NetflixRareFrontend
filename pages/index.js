@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { checkUser } from '../utils/auth';
 import { useAuth } from '../utils/context/authContext';
-import RegisterForm from '../components/RegisterForm';
+import RegisterForm from '../components/forms/RegisterForm';
 
 function Home() {
   const { user } = useAuth();

@@ -25,6 +25,11 @@ body {
   background-color: whitesmoke;
 }
 
+sidebar{
+	position: fixed;
+	z-index: 1000;
+}
+
 .flex {
 display: flex;
 }
