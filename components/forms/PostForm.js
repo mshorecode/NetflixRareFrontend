@@ -1,18 +1,20 @@
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { Card } from 'react-bootstrap';
+import { Dropdown, Card } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import { useAuth } from '../../utils/context/authContext';
 import { createPost, editPost } from '../../api/postApi';
 import { getAllCategories } from '../../api/categoryApi';
-import getTags from '../../api/tagsAPI';
+import { getTags } from '../../api/tagsAPI';
+import TagBadge from '../TagBadge';
 
 function PostForm({ post }) {
   const { user } = useAuth();
   const [categories, setCategories] = useState([]);
   const [tags, setTags] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
   const router = useRouter();
   const [formData, setFormData] = useState({
     publication_Date: null,
@@ -24,6 +26,18 @@ function PostForm({ post }) {
     user_Id: user.id,
     tags: [],
   });
+
+  const toggleTag = (option) => {
+    if (selectedTags.includes(option)) {
+      setSelectedTags(
+        selectedTags.filter((item) => item !== option),
+      );
+    } else {
+      setSelectedTags(
+        [...selectedTags, option],
+      );
+    }
+  };
 
   useEffect(() => {
     getAllCategories().then(setCategories);
@@ -39,8 +53,11 @@ function PostForm({ post }) {
       const payload = {
         ...formData,
         publication_Date: new Date(),
+        tags: selectedTags,
       };
-      createPost(payload).then(router.push('/feed'));
+      createPost(payload);
+      // .then(router.push('/feed'));
+      console.warn(payload);
     }
   };
 
@@ -53,9 +70,12 @@ function PostForm({ post }) {
   };
 
   return (
-    <Card className="p-2">
+    <Card className="p-2 flex flex-col my-5">
       <h1 className="text-center">Make a Post</h1>
-      <Form onSubmit={handleSubmit}>
+      <Form
+        className="flex flex-col"
+        onSubmit={handleSubmit}
+      >
         <Form.Group>
           <Form.Label>Title</Form.Label>
           <Form.Control
@@ -108,21 +128,38 @@ function PostForm({ post }) {
             ))
           }
         </Form.Select>
-        <>
-          {tags?.map((tag) => (
-            <div key={`inline-${tag.id}`} className="mb-3">
-              <Form.Check
-                inline
-                label={tag.label}
-                name={tag.id}
-                type={tag.id}
-                id={`inline-${tag.id}-1`}
-              />
-            </div>
-          ))}
-        </>
+        <div
+          className="flex flex-row m-4"
+        >
+          <Dropdown>
+            <Dropdown.Toggle
+              variant="success"
+              id="dropdown-basic"
+            >
+              Tag your post
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              {tags.map((option) => (
+                <Dropdown.Item
+                  key={option.id}
+                  onClick={() => toggleTag(option)}
+                  active={
+                  selectedTags.includes(option.id)
+                  }
+                >
+                  {option.label}
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
+          <div>
+            {selectedTags?.map((tag) => (
+              <TagBadge id={tag.id} />
+            ))}
+          </div>
+        </div>
 
-        <Button type="submit">
+        <Button className="place-self-center" type="submit">
           Publish
         </Button>
       </Form>

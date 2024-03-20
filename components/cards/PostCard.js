@@ -10,7 +10,9 @@ import {
   CardTitle,
   Image,
   Button,
+  ButtonGroup,
 } from 'react-bootstrap';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import { getCategoryById } from '../../api/categoryApi';
@@ -56,13 +58,18 @@ function PostCard({ post, onUpdate }) {
         <CardText>{post.content}</CardText>
         {post.approved ? (<Badge>Approved</Badge>) : ''}
         <CardText>{formattedDate}</CardText>
-        {user.id === author.id
-          ? (
-            <><Button onClick={() => router.push(`/post/edit/${post.id}`)}>Edit</Button>
-              <Button onClick={deleteAPost}>Delete</Button>
-            </>
-          ) : ''}
-        <Reactions />
+        <div
+          className="flex flex-row justify-between"
+        >
+          <Reactions />
+          {user.id === author.id
+            ? (
+              <ButtonGroup>
+                <Button onClick={() => router.push(`/post/edit/${post.id}`)}>Edit</Button>
+                <Button onClick={deleteAPost}>Delete</Button>
+              </ButtonGroup>
+            ) : ''}
+        </div>
       </CardBody>
     </Card>
   );

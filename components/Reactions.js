@@ -17,8 +17,6 @@ function Reactions() {
     getAllTheReactions();
   }, []);
 
-  console.warn(allReactions);
-
   return (
     <div className="flex">
       {allReactions.map((reaction) => (
