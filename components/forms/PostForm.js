@@ -42,22 +42,27 @@ function PostForm({ post }) {
   useEffect(() => {
     getAllCategories().then(setCategories);
     getTags().then(setTags);
-    if (post?.id) setFormData(post);
+    if (post?.id) {
+      setFormData(post);
+      // setSelectedTags(post.tags);
+    }
   }, [post]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (post?.id) {
-      editPost(formData).then(() => router.push('/feed'));
+      const payload = {
+        ...formData,
+        tags: selectedTags,
+      };
+      editPost(payload).then(() => router.push('/feed'));
     } else {
       const payload = {
         ...formData,
         publication_Date: new Date(),
         tags: selectedTags,
       };
-      createPost(payload);
-      // .then(router.push('/feed'));
-      console.warn(payload);
+      createPost(payload).then(() => (router.push('/feed')));
     }
   };
 
@@ -177,6 +182,10 @@ PostForm.propTypes = {
     content: PropTypes.string,
     image_Url: PropTypes.string,
     approved: PropTypes.bool,
+    tags: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      label: PropTypes.string,
+    })),
   }).isRequired,
 };
 

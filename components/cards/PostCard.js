@@ -62,11 +62,11 @@ function PostCard({ post, onUpdate }) {
           className="flex flex-row justify-between"
         >
           <Reactions />
-          {user.id === author.id
+          {user.id === author?.id
             ? (
               <ButtonGroup>
-                <Button onClick={() => router.push(`/post/edit/${post.id}`)}>Edit</Button>
-                <Button onClick={deleteAPost}>Delete</Button>
+                <Button className="rounded-none" onClick={() => router.push(`/post/edit/${post.id}`)}>Edit</Button>
+                <Button className="rounded-none" onClick={deleteAPost}>Delete</Button>
               </ButtonGroup>
             ) : ''}
         </div>
