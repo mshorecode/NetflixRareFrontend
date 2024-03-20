@@ -17,14 +17,15 @@ function Reactions({ postId, postReactions }) {
 
   useEffect(() => {
     getAllTheReactions();
-  }, [postReactions]);
+    console.warn(reactionChange);
+  }, [reactionChange]);
 
   const handleReactionChange = (e) => {
     const changeReactionNow = [postId, e.target.id];
     setReactionChange(changeReactionNow);
     // const payload = reactionChange;
-    console.warn(reactionChange);
     // addReaction(payload[0], payload[1]).then(console.warn);
+    console.warn(reactionChange);
   };
 
   return (
@@ -34,7 +35,6 @@ function Reactions({ postId, postReactions }) {
           <button
             className="text-gray-800 hover:bg-gray-200 font-bold p-2 rounded transition-colors duration-300"
             id={reaction.id}
-            onClick={handleReactionChange}
           >
             <img src={reaction.image_Url} height="16px" width="16px" />
           </button>
