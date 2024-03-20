@@ -62,7 +62,7 @@ function PostCard({ post, onUpdate }) {
               <Button onClick={deleteAPost}>Delete</Button>
             </>
           ) : ''}
-        <Reactions postId={post.id} />
+        <Reactions postId={post.id} postReactions={post.reactions} />
       </CardBody>
     </Card>
   );
@@ -78,6 +78,7 @@ PostCard.propTypes = {
     content: PropTypes.string,
     image_Url: PropTypes.string,
     approved: PropTypes.bool,
+    reactions: PropTypes.arrayOf(),
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
 };
