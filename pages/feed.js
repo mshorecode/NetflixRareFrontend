@@ -18,19 +18,19 @@ export default function PostFeed() {
   }, []);
 
   return (
-    <>
+    <div className="flex flex-col justify-center m-2">
       <Button
-        className="flex post-btn"
+        className="place-self-center rounded-none"
         onClick={() => router.push('/post/new')}
       >Make a post
       </Button>
       <div
-        className="flex flex-col-reverse"
+        className="flex flex-col-reverse justify-center content-center m-2"
       >
         {posts.map((p) => (
           <PostCard post={p} key={p.id} onUpdate={getPosts} />
         ))}
       </div>
-    </>
+    </div>
   );
 }
