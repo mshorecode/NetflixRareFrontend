@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { Dropdown, Card } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import { useAuth } from '../../utils/context/authContext';
 import { createPost, editPost } from '../../api/postApi';
@@ -44,7 +44,6 @@ function PostForm({ post }) {
     getTags().then(setTags);
     if (post?.id) {
       setFormData(post);
-      // setSelectedTags(post.tags);
     }
   }, [post]);
 
@@ -134,37 +133,23 @@ function PostForm({ post }) {
           }
         </Form.Select>
         <div
-          className="flex flex-row m-4"
+          className="flex flex-rowflex-start"
         >
-          <Dropdown>
-            <Dropdown.Toggle
-              variant="success"
-              id="dropdown-basic"
-            >
-              Tag your post
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              {tags.map((option) => (
-                <Dropdown.Item
-                  key={option.id}
-                  onClick={() => toggleTag(option)}
-                  active={
-                  selectedTags.includes(option.id)
-                  }
-                >
-                  {option.label}
-                </Dropdown.Item>
-              ))}
-            </Dropdown.Menu>
-          </Dropdown>
-          <div>
-            {selectedTags?.map((tag) => (
-              <TagBadge id={tag.id} />
-            ))}
-          </div>
+          {tags.map((t) => (
+            <>
+              <div className="flex flex-row items-center m-4">
+                <Form.Check
+                  className="m-1"
+                  key={t.id}
+                  onClick={() => toggleTag(t)}
+                />
+                <TagBadge id={t.id} />
+              </div>
+            </>
+          ))}
         </div>
 
-        <Button className="place-self-center" type="submit">
+        <Button className="place-self-center rounded-none" type="submit">
           Publish
         </Button>
       </Form>
