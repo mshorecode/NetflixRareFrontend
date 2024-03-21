@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useRouter } from 'next/router';
-import { registerUser } from '../utils/auth'; // Update with path to registerUser
-import { useAuth } from '../utils/context/authContext';
+import { useAuth } from '../../utils/context/authContext';
+import { registerUser } from '../../utils/auth';
 
 function RegisterForm() {
   const { user } = useAuth();
