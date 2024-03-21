@@ -25,6 +25,31 @@ body {
   background-color: whitesmoke;
 }
 
+sidebar{
+	position: fixed;
+	z-index: 1000;
+}
+
+.flex {
+display: flex;
+}
+
+.flex-col-reverse {
+  flex-direction: column-reverse;	
+}
+
+.justify-evenly {
+justify-content: space-evenly;
+}
+
+.justify-center{
+justify-content: center;
+}
+
+.content-center {
+align-content: center;
+}
+
 .btn {
   margin: 10px;
   color: black;
