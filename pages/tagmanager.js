@@ -10,8 +10,9 @@ function Tagmanager() {
 
   useEffect(() => {
     getAllTheTags();
-    console.warn(tags);
   }, []);
+
+  console.warn(tags);
 
   return (
     <div>tagmanager</div>

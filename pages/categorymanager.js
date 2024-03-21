@@ -10,8 +10,9 @@ function Categorymanager() {
 
   useEffect(() => {
     getAllTheCategories();
-    console.warn(categories);
   }, []);
+
+  console.warn(categories);
 
   return (
     <div>categorymanager</div>
