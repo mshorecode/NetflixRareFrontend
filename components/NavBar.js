@@ -22,6 +22,12 @@ export default function NavBar() {
           <Link passHref href="/post/new">
             <Nav.Link className="pt-[20px] text-xl">Create Post</Nav.Link>
           </Link>
+          <Link passHref href="/tagmanager">
+            <Nav.Link className="pt-[20px] text-xl">Tag Manager</Nav.Link>
+          </Link>
+          <Link passHref href="/categorymanager">
+            <Nav.Link className="pt-[20px] text-xl">Category Manager</Nav.Link>
+          </Link>
         </Nav>
         <UserMenu />
       </div>
