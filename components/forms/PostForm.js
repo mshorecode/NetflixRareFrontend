@@ -1,15 +1,20 @@
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { Card } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import { useAuth } from '../../utils/context/authContext';
 import { createPost, editPost } from '../../api/postApi';
 import { getAllCategories } from '../../api/categoryApi';
+import { getTags } from '../../api/tagsAPI';
+import TagBadge from '../TagBadge';
 
 function PostForm({ post }) {
   const { user } = useAuth();
   const [categories, setCategories] = useState([]);
+  const [tags, setTags] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
   const router = useRouter();
   const [formData, setFormData] = useState({
     publication_Date: null,
@@ -19,23 +24,44 @@ function PostForm({ post }) {
     image_Url: '',
     approved: false,
     user_Id: user.id,
+    tags: [],
   });
+
+  const toggleTag = (option) => {
+    if (selectedTags.includes(option)) {
+      setSelectedTags(
+        selectedTags.filter((item) => item !== option),
+      );
+    } else {
+      setSelectedTags(
+        [...selectedTags, option],
+      );
+    }
+  };
 
   useEffect(() => {
     getAllCategories().then(setCategories);
-    if (post?.id) setFormData(post);
+    getTags().then(setTags);
+    if (post?.id) {
+      setFormData(post);
+    }
   }, [post]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (post?.id) {
-      editPost(formData).then(() => router.push('/feed'));
+      const payload = {
+        ...formData,
+        tags: selectedTags,
+      };
+      editPost(payload).then(() => router.push('/feed'));
     } else {
       const payload = {
         ...formData,
         publication_Date: new Date(),
+        tags: selectedTags,
       };
-      createPost(payload).then(router.push('/feed'));
+      createPost(payload).then(() => (router.push('/feed')));
     }
   };
 
@@ -48,49 +74,54 @@ function PostForm({ post }) {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Group>
-        <Form.Label>Title</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="Enter title"
-          name="title"
-          value={formData.title}
-          onChange={handleChange}
-          required
-        />
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Content</Form.Label>
-        <Form.Control
-          type="text"
-          as="textarea"
-          placeholder="Write your post"
-          name="content"
-          value={formData.content}
-          onChange={handleChange}
-          required
-        />
-      </Form.Group>
-      <Form.Group className="mb-3">
-        <Form.Label>Image</Form.Label>
-        <Form.Control
-          type="url"
-          placeholder="Enter image URL"
-          name="image_Url"
-          value={formData.image_Url}
-          onChange={handleChange}
-        />
-      </Form.Group>
-      <Form.Select
-        aria-label="Category"
-        name="category_Id"
-        onChange={handleChange}
-        value={formData.category_Id}
-        required
+    <Card className="p-2 flex flex-col my-5">
+      <h1 className="text-center">Make a Post</h1>
+      <Form
+        className="flex flex-col"
+        onSubmit={handleSubmit}
       >
-        <option value="">Select a Category</option>
-        {
+        <Form.Group>
+          <Form.Label>Title</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter title"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Content</Form.Label>
+          <Form.Control
+            type="text"
+            as="textarea"
+            placeholder="Write your post"
+            name="content"
+            value={formData.content}
+            onChange={handleChange}
+            required
+          />
+        </Form.Group>
+        <Form.Group className="mb-3">
+          <Form.Label>Image</Form.Label>
+          <Form.Control
+            type="url"
+            placeholder="Enter image URL"
+            name="image_Url"
+            value={formData.image_Url}
+            onChange={handleChange}
+          />
+        </Form.Group>
+        <Form.Select
+          aria-label="Category"
+          name="category_Id"
+          onChange={handleChange}
+          value={formData.category_Id}
+          required
+        >
+          <option value="">Select a Category</option>
+          {
             categories.map((category) => (
               <option
                 key={category.id}
@@ -100,12 +131,29 @@ function PostForm({ post }) {
               </option>
             ))
           }
-      </Form.Select>
+        </Form.Select>
+        <div
+          className="flex flex-rowflex-start"
+        >
+          {tags.map((t) => (
+            <>
+              <div className="flex flex-row items-center m-4">
+                <Form.Check
+                  className="m-1"
+                  key={t.id}
+                  onClick={() => toggleTag(t)}
+                />
+                <TagBadge id={t.id} />
+              </div>
+            </>
+          ))}
+        </div>
 
-      <Button type="submit">
-        Publish
-      </Button>
-    </Form>
+        <Button className="place-self-center rounded-none" type="submit">
+          Publish
+        </Button>
+      </Form>
+    </Card>
   );
 }
 
@@ -119,6 +167,10 @@ PostForm.propTypes = {
     content: PropTypes.string,
     image_Url: PropTypes.string,
     approved: PropTypes.bool,
+    tags: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      label: PropTypes.string,
+    })),
   }).isRequired,
 };
 
