@@ -84,6 +84,14 @@ align-content: center;
   padding: 1rem;
 }
 
+#tag-1 {
+  background-color: blue!important;
+}
+
+#tag-2 {
+  background-color: green!important;
+}
+
 .page-layout {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;

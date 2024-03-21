@@ -10,7 +10,9 @@ import {
   CardTitle,
   Image,
   Button,
+  ButtonGroup,
 } from 'react-bootstrap';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import { getCategoryById } from '../../api/categoryApi';
@@ -18,12 +20,16 @@ import { getUserById } from '../../api/userApi';
 import { useAuth } from '../../utils/context/authContext';
 import { deletePost } from '../../api/postApi';
 import Reactions from '../Reactions';
+import TagBadge from '../TagBadge';
 
 function PostCard({ post, onUpdate }) {
   const [author, setAuthor] = useState({});
   const [category, setCategory] = useState({});
   const { user } = useAuth();
   const router = useRouter();
+  const { pathname } = router;
+
+  const isDetail = pathname.includes('/post');
 
   const getCatAndAuthor = () => {
     getUserById(post?.user_Id).then(setAuthor);
@@ -49,20 +55,32 @@ function PostCard({ post, onUpdate }) {
       {post.image_Url ? (<Image src={post.image_Url} />) : ''}
       <CardHeader>
         <CardTitle>{post.title}</CardTitle>
+        <CardText>{formattedDate}</CardText>
         <CardText>{author?.first_Name} {author?.last_Name}</CardText>
-        <Badge>{category?.label}</Badge>
       </CardHeader>
       <CardBody>
         <CardText>{post.content}</CardText>
-        {post.approved ? (<Badge>Approved</Badge>) : ''}
-        <CardText>{formattedDate}</CardText>
-        {user.id === author.id
-          ? (
-            <><Button onClick={() => router.push(`/post/edit/${post.id}`)}>Edit</Button>
-              <Button onClick={deleteAPost}>Delete</Button>
-            </>
-          ) : ''}
-        <Reactions />
+        {isDetail ? (
+          <>
+            <Badge>{category?.label}</Badge>
+            {post.approved ? (<Badge>Approved</Badge>) : ''}
+            {post.tags?.map((t) => (
+              <TagBadge id={t.id} />
+            ))}
+            <Reactions />
+          </>
+        ) : ''}
+        <div className="flex">
+          {user.id === author?.id
+            ? (
+              <ButtonGroup
+                className="justify-self-end"
+              >
+                <Button className="rounded-none" onClick={() => router.push(`/post/edit/${post.id}`)}>Edit</Button>
+                <Button className="rounded-none" onClick={deleteAPost}>Delete</Button>
+              </ButtonGroup>
+            ) : ''}
+        </div>
       </CardBody>
     </Card>
   );
@@ -78,6 +96,10 @@ PostCard.propTypes = {
     content: PropTypes.string,
     image_Url: PropTypes.string,
     approved: PropTypes.bool,
+    tags: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      label: PropTypes.string,
+    })),
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
 };
