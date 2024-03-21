@@ -13,14 +13,14 @@ export default function UserProfile() {
         {user.first_Name} {user.last_Name}
       </p>
       <div className="flex mb-2">
-        <Image src={user.fbUser.photoURL} alt="`{user.first_Name}, {user.last_Name}`" height={120} width={120} className="rounded-full" />
+        <Image src={user.profile_Image_Url} alt="`{user.first_Name}, {user.last_Name}`" height={120} width={120} className="rounded-full" />
       </div>
       <div className="flex-col gap-[6px] mb-2">
         <p className="text-lg font-semibold">
           Email:
         </p>
         <p className="text-md ml-3">
-          {user.fbUser.email}
+          {user.email}
         </p>
       </div>
       <div className="flex-col gap-[6px] mb-2">

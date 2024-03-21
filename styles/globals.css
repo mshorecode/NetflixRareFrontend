@@ -91,3 +91,9 @@ align-content: center;
 #tag-2 {
   background-color: green!important;
 }
+
+.page-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+}
