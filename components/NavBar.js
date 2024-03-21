@@ -16,6 +16,9 @@ export default function NavBar() {
       </div>
       <div className="flex right-nav fw-semibold">
         <Nav>
+          <Link passHref href="/users">
+            <Nav.Link className="pt-[20px] text-xl">Authors</Nav.Link>
+          </Link>
           <Link passHref href="/feed">
             <Nav.Link className="pt-[20px] text-xl">Posts</Nav.Link>
           </Link>
