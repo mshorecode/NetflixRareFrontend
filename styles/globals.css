@@ -83,3 +83,9 @@ align-content: center;
   /* font-family: "Poppins", sans-serif !important; */
   padding: 1rem;
 }
+
+.page-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem;
+}

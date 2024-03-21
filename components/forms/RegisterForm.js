@@ -48,7 +48,7 @@ function RegisterForm() {
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicBio">
           <Form.Label>Bio</Form.Label>
-          <Form.Control type="textfield" placeholder="Enter bio" name="bio" value={formData.bio} onChange={handleChange} className="rounded-none" required />
+          <Form.Control type="text" as="textarea" placeholder="Enter bio" name="bio" value={formData.bio} onChange={handleChange} className="rounded-none" required />
         </Form.Group>
         <Button type="submit" className="bg-slate-800 border-slate-800 rounded-sm">
           {user.id ? 'Update' : 'Register'}

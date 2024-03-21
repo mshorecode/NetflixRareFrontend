@@ -14,7 +14,7 @@ import {
 import moment from 'moment';
 import { useRouter } from 'next/router';
 import { getCategoryById } from '../../api/categoryApi';
-import getUserById from '../../api/userApi';
+import { getUserById } from '../../api/userApi';
 import { useAuth } from '../../utils/context/authContext';
 import { deletePost } from '../../api/postApi';
 import Reactions from '../Reactions';
