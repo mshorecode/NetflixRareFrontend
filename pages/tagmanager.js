@@ -12,7 +12,7 @@ function Tagmanager() {
 
   useEffect(() => {
     getAllTheTags();
-  }, []);
+  }, [tags]);
 
   const handleDelete = (e) => {
     deleteTag(e.target.id).then(setTags);
