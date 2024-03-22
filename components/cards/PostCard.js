@@ -9,6 +9,7 @@ import {
   Image,
   Button,
   ButtonGroup,
+  Dropdown,
 } from 'react-bootstrap';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import moment from 'moment';
@@ -33,16 +34,15 @@ function PostCard({ post, onUpdate }) {
     getUserById(post.user_Id).then(setAuthor);
   }, [post]);
 
+  const postDetails = () => {
+    router.push(`/post/${post.id}`);
+  };
+
   const formattedDate = moment(post.publication_Date).format('LL');
 
   return (
-    <a
-      href={`/post/${post.id}`}
-      className="flex flex-col"
-    >
-      <Card
-        className="mb-2 flex flex-col basis-1"
-      >
+    <a onClick={postDetails} className="flex flex-col">
+      <Card className="mb-2 flex flex-col basis-1">
         <CardBody>
           <div className="flex flex-row justify-between">
             <CardTitle>{post.title}</CardTitle>

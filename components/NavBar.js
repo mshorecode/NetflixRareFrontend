@@ -17,13 +17,13 @@ export default function NavBar() {
       <div className="flex right-nav fw-semibold">
         <Nav>
           <Link passHref href="/users">
-            <Nav.Link className="pt-[20px] text-xl">Authors</Nav.Link>
+            <Nav.Link className="pt-[10px] text-xl">Authors</Nav.Link>
           </Link>
           <Link passHref href="/feed">
-            <Nav.Link className="pt-[20px] text-xl">Posts</Nav.Link>
+            <Nav.Link className="pt-[10px] text-xl">Posts</Nav.Link>
           </Link>
           <Link passHref href="/post/new">
-            <Nav.Link className="pt-[20px] text-xl">Create Post</Nav.Link>
+            <Nav.Link className="pt-[10px] text-xl">Create Post</Nav.Link>
           </Link>
         </Nav>
         <UserMenu />
