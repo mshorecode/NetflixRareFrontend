@@ -20,7 +20,7 @@ export default function PostFeed() {
   return (
     <div className="flex flex-col justify-center m-2">
       <Button
-        className="place-self-center rounded-none"
+        className="place-self-center rounded-none m-4"
         onClick={() => router.push('/post/new')}
       >Make a post
       </Button>
