@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
+import { createCategory } from '../../api/categoryApi';
 
 const initialState = {
   label: '',
@@ -16,8 +17,16 @@ function CategoryForm() {
     }));
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const payload = {
+      ...formInput,
+    };
+    createCategory(payload).then(() => setFormInput(initialState));
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
           <h2 className="text-base font-semibold leading-7 text-gray-900">Create a Category</h2>

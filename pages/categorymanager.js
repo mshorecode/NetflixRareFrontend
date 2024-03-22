@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Button } from 'react-bootstrap';
-import { getAllCategories } from '../api/categoryApi';
+import { getAllCategories, deleteCategory } from '../api/categoryApi';
 import CategoryForm from '../components/forms/CategoryForm';
 
 function Categorymanager() {
@@ -12,7 +12,11 @@ function Categorymanager() {
 
   useEffect(() => {
     getAllTheCategories();
-  }, []);
+  }, [categories]);
+
+  const handleDelete = (e) => {
+    deleteCategory(e.target.id).then(setCategories);
+  };
 
   return (
     <div className="grid grid-cols-2 gap-4 py-4">
@@ -28,7 +32,7 @@ function Categorymanager() {
             {categories.map((cat) => (
               <tr>
                 <td> {cat.label}</td>
-                <td> <Button color="bg-red"> Delete </Button> <Button color="bg-red"> Edit </Button></td>
+                <td> <Button color="bg-red" id={cat.id} onClick={handleDelete}> Delete </Button> <Button color="bg-red"> Edit </Button></td>
               </tr>
             ))}
           </tbody>
