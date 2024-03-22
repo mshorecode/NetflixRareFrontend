@@ -1,20 +1,39 @@
 import { useEffect, useState } from 'react';
 import moment from 'moment';
 import { useRouter } from 'next/router';
+import { Button } from 'react-bootstrap';
 import { getUserById } from '../../api/userApi';
+import { addSubscription, deleteSubscription, getSubscriptionId } from '../../api/subscriptionApi';
+import { useAuth } from '../../utils/context/authContext';
 
 export default function ViewUserProfile() {
-  const [userInfo, setUserInfo] = useState({});
   const router = useRouter();
   const { id } = router.query;
+  const { user } = useAuth();
+  const [userInfo, setUserInfo] = useState({});
+  const [subscription, setSubscription] = useState({});
+  const subscribed = {
+    follower_Id: user.id,
+    author_Id: id,
+    created_On: new Date(),
+    ended_On: null,
+  };
+
+  const subscribeToUser = () => {
+    getUserById(id).then(addSubscription(subscribed));
+    getSubscriptionId(user.id, id).then((data) => setSubscription(data));
+  };
+
+  const unsubscribe = () => {
+    deleteSubscription(subscription).then(() => setSubscription(null));
+  };
 
   useEffect(() => {
     getUserById(id).then((data) => {
       setUserInfo(data);
     });
-  }, [id]);
-
-  console.warn(userInfo);
+    getSubscriptionId(user.id, id).then((data) => setSubscription(data));
+  }, [id, user.id]);
 
   const formattedDate = moment(userInfo.created_On).format('LL');
 
@@ -55,6 +74,12 @@ export default function ViewUserProfile() {
           <p className="text-md ml-3">
             {userInfo.is_Staff ? 'Admin' : 'User'}
           </p>
+        </div>
+        <div>
+          { subscription !== null ? (
+            <Button onClick={unsubscribe}>Unsubscribe</Button>) : (
+              <Button onClick={subscribeToUser}>Subscribe</Button>
+          )}
         </div>
       </div>
     </div>
