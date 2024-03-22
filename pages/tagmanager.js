@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button } from 'react-bootstrap';
-import { getTags } from '../api/tagsAPI';
+import { deleteTag, getTags } from '../api/tagsAPI';
 import TagForm from '../components/forms/TagForm';
 
 function Tagmanager() {
@@ -14,7 +14,9 @@ function Tagmanager() {
     getAllTheTags();
   }, []);
 
-  console.warn(tags);
+  const handleDelete = (e) => {
+    deleteTag(e.target.id).then(setTags);
+  };
 
   return (
     <div className="grid grid-cols-2 gap-4 py-4">
@@ -30,7 +32,7 @@ function Tagmanager() {
             {tags.map((tag) => (
               <tr>
                 <td> {tag.label}</td>
-                <td> <Button color="bg-red"> Delete </Button> <Button color="bg-red"> Edit </Button></td>
+                <td> <Button color="bg-red" id={tag.id} onClick={handleDelete}> Delete </Button> <Button color="bg-red"> Edit </Button></td>
               </tr>
             ))}
           </tbody>

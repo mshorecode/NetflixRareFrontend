@@ -1,7 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
 
+const initialState = {
+  label: '',
+};
+
 function TagForm() {
+  const [formInput, setFormInput] = useState(initialState);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormInput((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
+
   return (
     <form>
       <div className="space-y-12">
@@ -19,10 +33,12 @@ function TagForm() {
                 <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <input
                     type="text"
-                    name="username"
-                    id="username"
-                    autoComplete="username"
+                    name="label"
+                    id="label"
+                    autoComplete="label"
                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    value={formInput.label}
+                    onChange={handleChange}
                     placeholder="Name"
                   />
                 </div>
