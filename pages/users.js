@@ -1,14 +1,20 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { Button } from 'react-bootstrap';
 import { getAllUsers } from '../api/userApi';
 
 export default function Users() {
   const [users, setUsers] = useState([]);
+  const router = useRouter();
 
   useEffect(() => {
     getAllUsers().then((data) => setUsers(data));
   }, []);
+
+  const viewProfile = (id) => {
+    router.push(`/user/${id}`);
+  };
 
   return (
     <div>
@@ -30,7 +36,7 @@ export default function Users() {
                 {user.first_Name} {user.last_Name}
               </p>
             </div>
-            <Button type="button" href={`/user/${user.id}`} className="bg-slate-800 border-slate-800 rounded-sm text-white">View Profile</Button>
+            <Button type="button" onClick={() => viewProfile(user.id)} className="bg-slate-800 border-slate-800 rounded-sm text-white">View Profile</Button>
           </div>
         ))}
       </div>
