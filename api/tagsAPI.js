@@ -24,4 +24,16 @@ const getTagById = (id) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-export { getTags, getTagById };
+const removeTagFromPost = (payload) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/api/posts/${payload.post_Id}/remove`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  }).then((response) => response.json())
+    .then((data) => resolve(data))
+    .catch(reject);
+});
+
+export { getTags, getTagById, removeTagFromPost };
