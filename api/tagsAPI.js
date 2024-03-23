@@ -24,6 +24,30 @@ const getTagById = (id) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const deleteTag = (id) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/api/tags/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).then((response) => response.json())
+    .then((data) => resolve(Object.values(data)))
+    .catch(reject);
+});
+
+const createTag = (payload) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/api/tags`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  })
+    .then((response) => response.json())
+    .then((data) => resolve(Object.values(data)))
+    .catch(reject);
+});
+
 const removeTagFromPost = (payload) => new Promise((resolve, reject) => {
   fetch(`${endpoint}/api/posts/${payload.post_Id}/remove`, {
     method: 'PATCH',
@@ -36,4 +60,6 @@ const removeTagFromPost = (payload) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-export { getTags, getTagById, removeTagFromPost };
+export {
+  getTags, getTagById, removeTagFromPost, deleteTag, createTag,
+};
