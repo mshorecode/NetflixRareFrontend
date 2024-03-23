@@ -7,20 +7,26 @@ import CommentCard from '../../../components/cards/CommentCard';
 
 export default function PostComments() {
   const [comments, setComments] = useState([]);
+  const [noComments, setNoComments] = useState(false);
   const router = useRouter();
   const { id } = router.query;
 
   useEffect(() => {
-    getPostComments(id).then(setComments);
-  });
+    getPostComments(id).then((resp) => {
+      if (typeof (resp) === 'string') {
+        setNoComments(true);
+      } else (setComments(resp));
+    });
+  }, []);
 
   return (
     <Container className="p-4">
       <CommentForm />
       <div id="comment-container">
-        {comments.map((c) => (
-          <CommentCard comment={c} />
-        ))}
+        {noComments ? (<p>Write the first comment!</p>)
+          : (comments.map((c) => (
+            <CommentCard key={c.id} comment={c} />
+          )))}
       </div>
     </Container>
   );

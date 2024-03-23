@@ -13,7 +13,7 @@ export default function CommentCard({ comment }) {
 
   useEffect(() => {
     getUserById(comment.author_Id).then(setAuthor);
-  });
+  }, []);
 
   return (
     <Card>

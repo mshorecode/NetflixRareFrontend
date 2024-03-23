@@ -25,18 +25,19 @@ export default function CommentForm() {
   };
 
   const handleSubmit = (e) => {
-    e.preventdefault();
+    e.preventDefault();
     const payload = {
       ...formData,
       created_On: new Date(),
     };
-    createComment(payload).then(router.push(`/post/comments/${id}`));
+    console.warn(payload);
+    createComment(payload).then(() => router.push(`/post/comments/${id}`));
   };
 
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Group>
-        <Form.Label>Content</Form.Label>
+        <Form.Label>Add a comment</Form.Label>
         <Form.Control
           type="text"
           as="textarea"
