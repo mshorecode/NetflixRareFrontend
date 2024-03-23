@@ -1,20 +1,11 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/anchor-is-valid */
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useState } from 'react';
+/* eslint-disable import/no-extraneous-dependencies */
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import {
-  Card,
-  CardBody,
-  CardText,
-  CardTitle,
-  Image,
-  Button,
-  ButtonGroup,
-} from 'react-bootstrap';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import moment from 'moment';
+import Image from 'next/image';
+import { IoCreateOutline } from 'react-icons/io5';
+import { GoTrash } from 'react-icons/go';
+import { Button } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import { getUserById } from '../../api/userApi';
 import { useAuth } from '../../utils/context/authContext';
@@ -32,56 +23,72 @@ function PostCard({ post, onUpdate }) {
     }
   };
 
+  const editPost = () => {
+    router.push(`/post/edit/${post.id}`);
+  };
+
   useEffect(() => {
     getUserById(post.user_Id).then(setAuthor);
   }, [post]);
 
-  // const postDetails = () => {
-  //   router.push(`/post/${post.id}`);
-  // };
+  const postDetails = () => {
+    router.push(`/post/${post.id}`);
+  };
 
   const formattedDate = moment(post.publication_Date).format('LL');
 
   return (
-
-    <Card
-      className="mb-2 flex flex-col basis-1"
-    >
-      <CardBody>
-        <a
-          href={`/post/${post.id}`}
-        >
-          <div className="flex flex-row justify-between">
-            <CardTitle>{post.title}</CardTitle>
-            <CardText>{formattedDate}</CardText>
+    <>
+      <div key={post.id} className="mb-2 flex flex-col basis-1">
+        <div className="w-full mx-auto my-8 p-3 border-b-[1px] border-slate-300">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-2">
+            <div>
+              <div className="font-bold text-lg mb-2">{post.title}</div>
+              <div className="text-sm mb-2 flex gap-1">
+                <p className="text-slate-800 font-semibold">Author:</p>
+                <p className="text-slate-800">{author.first_Name} {author.last_Name}</p>
+              </div>
+              <div className="text-sm mb-2 flex gap-1">
+                <p className="text-slate-800 font-semibold">Publication Date:</p>
+                <p className="text-slate-700">{formattedDate}</p>
+              </div>
+              <p>{post.content}</p>
+            </div>
+            <div className="flex justify-end">
+              {post.image_Url && (
+              <Image
+                src={post.image_Url}
+                alt={post.title}
+                width={350}
+                height={200}
+                onClick={postDetails}
+                className="object-cover"
+              />
+              )}
+            </div>
           </div>
-          <div className="flex justify-center">
-            {post.image_Url ? (<Image src={post.image_Url} />) : ''}
-          </div>
-        </a>
-
-        <div className="flex flex-row justify-between items-center">
-          <CardText>{author?.first_Name} {author?.last_Name}</CardText>
-          <div className="flex flex-row justify-end items-center">
-            {user.id === author?.id
-              ? (
-                <ButtonGroup
-                  className="justify-self-end ml-4"
-                >
-                  <Button className="rounded-none mr-4" onClick={() => router.push(`/post/edit/${post.id}`)}>
-                    <span className="material-symbols-outlined">edit</span>
-                  </Button>
-                  <Button className="rounded-none" onClick={deleteAPost}>
-                    <span className="material-symbols-outlined">delete</span>
-                  </Button>
-                </ButtonGroup>
+          <div className="flex justify-start mt-auto">
+            <div>
+              {user.id !== author.id ? (
+                <Reactions postId={post.id} postReactions={post.reactions} className="text-2xl" />
               ) : ''}
+            </div>
+          </div>
+          <div className="flex justify-start items-end mt-auto">
+            {user.id === author.id ? (
+              <div className="flex gap-2">
+                <Button type="button" onClick={editPost} className="background hover:bg-transparent text-black-100 font-semibold border-none">
+                  <IoCreateOutline className="text-2xl text-indigo-500" />
+                </Button>
+                <Button type="button" onClick={deleteAPost} className="background hover:bg-transparent text-black-100 font-semibold border-none">
+                  <GoTrash className="text-xl mt-1 text-red-500" />
+                </Button>
+              </div>
+            ) : ''}
           </div>
         </div>
-        <Reactions postId={post.id} postReactions={post.reactions} />
-      </CardBody>
-    </Card>
-
+      </div>
+    </>
   );
 }
 

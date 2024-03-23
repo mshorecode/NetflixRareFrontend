@@ -49,7 +49,7 @@ export default function UserProfile() {
         </p>
       </div>
       <div>
-        <Button type="button" className="bg-slate-800 border-none hover:bg-slate-800 text-white font-bold rounded-sm mt-4">
+        <Button type="button" className="bg-slate-800 border-none hover:bg-slate-800 text-white font-semibold rounded-sm mt-4">
           Edit Profile
         </Button>
       </div>

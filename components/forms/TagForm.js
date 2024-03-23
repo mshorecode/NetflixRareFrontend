@@ -39,19 +39,19 @@ function TagForm() {
                 Tag Name
               </label>
               <div className="mt-2">
-                <div className="flex ring-gray-300 focus-within:ring-2 focus-within:ring-inset sm:max-w-md mb-4">
+                <div className="flex focus-within:ring-0 focus-within:ring-inset sm:max-w-md mb-4">
                   <input
                     type="text"
                     name="label"
                     id="label"
                     autoComplete="label"
-                    className="block flex-1 border-b border-slate-500 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                    className="outline-none block flex-1 border-b border-slate-500 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                     value={formInput.label}
                     onChange={handleChange}
                     placeholder="Name"
                   />
                 </div>
-                <Button type="submit"> Submit </Button>
+                <Button type="submit" className="bg-slate-800 border-none hover:bg-slate-800 text-white font-semibold rounded-sm mt-2"> Submit </Button>
               </div>
             </div>
           </div>

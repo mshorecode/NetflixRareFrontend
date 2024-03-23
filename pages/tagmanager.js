@@ -39,7 +39,7 @@ function Tagmanager() {
                   {tag.label}
                 </td>
                 <td className="background">
-                  <Button className="background hover:bg-transparent text-black-100 font-semibold border-none rounded-sm mx-auto" onClick={handleDelete}>
+                  <Button className="background hover:bg-transparent text-black-100 font-semibold border-none rounded-sm pl-5" onClick={handleDelete}>
                     <GoTrash id={tag.id} className="text-red-500" />
                   </Button>
                 </td>

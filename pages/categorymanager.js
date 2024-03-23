@@ -1,5 +1,8 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
+/* eslint-disable import/no-extraneous-dependencies */
 import React, { useEffect, useState } from 'react';
 import { Table, Button } from 'react-bootstrap';
+import { GoTrash } from 'react-icons/go';
 import { getAllCategories, deleteCategory } from '../api/categoryApi';
 import CategoryForm from '../components/forms/CategoryForm';
 
@@ -24,22 +27,25 @@ function Categorymanager() {
         <Table className="table-auto">
           <thead>
             <tr>
-              <th>Tags</th>
-              <th>Actions</th>
+              <th className="background">Tags</th>
+              <th className="background">Actions</th>
             </tr>
           </thead>
           <tbody>
             {categories.map((cat) => (
               <tr>
-                <td> {cat.label}</td>
-                <td> <Button className="bg-red-500 hover:bg-red-500 text-black-100 font-semibold py-2 px-4 border border-gray-400 rounded shadow" id={cat.id} onClick={handleDelete}> Delete </Button>
+                <td className="background"> {cat.label}</td>
+                <td className="background">
+                  <Button className="background hover:bg-transparent text-black-100 font-semibold border-none rounded-sm pl-5" onClick={handleDelete}>
+                    <GoTrash id={cat.id} className="text-red-500" />
+                  </Button>
                 </td>
               </tr>
             ))}
           </tbody>
         </Table>
       </div>
-      <div className="flex">
+      <div className="flex mx-auto">
         <CategoryForm />
       </div>
     </div>

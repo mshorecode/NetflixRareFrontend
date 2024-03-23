@@ -12,7 +12,7 @@ export default function TagBadge({ id }) {
 
   return (
     <Badge
-      className="flex text-center mb-2"
+      className="flex text-center mr-2 rounded-sm px-[5px] py-[3px]"
       id={`tag-${tag.id}`}
     >
       {tag.label}

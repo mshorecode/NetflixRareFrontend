@@ -17,9 +17,9 @@ function Signin() {
         paddingBlock: '0 5rem',
       }}
     >
-      <h1>Hi there!</h1>
-      <p>Click the button below to login!</p>
-      <Button type="button" size="lg" className="copy-btn" onClick={signIn}>
+      <h1 className="font-semibold fs-5">Hi there!</h1>
+      <p className="font-semibold fs-5">Click the button below to login!</p>
+      <Button type="button" size="sm" className="bg-slate-800 border-none hover:bg-slate-800 text-white font-semibold rounded-sm mt-2 w-[15%] mx-auto" onClick={signIn}>
         Sign In
       </Button>
     </div>

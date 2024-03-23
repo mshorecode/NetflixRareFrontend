@@ -38,7 +38,7 @@ export default function ViewUserProfile() {
   const formattedDate = moment(userInfo.created_On).format('LL');
 
   return (
-    <div>
+    <div className="flex justify-center">
       <div>
         <p className="text-3xl mt-5 mb-2 font-bold">
           {userInfo.first_Name} {userInfo.last_Name}
@@ -77,8 +77,8 @@ export default function ViewUserProfile() {
         </div>
         <div>
           { subscription !== null ? (
-            <Button onClick={unsubscribe}>Unsubscribe</Button>) : (
-              <Button onClick={subscribeToUser}>Subscribe</Button>
+            <Button onClick={unsubscribe} className="bg-slate-800 border-none hover:bg-slate-800 text-white font-semibold rounded-sm mt-2 py-1">Unsubscribe</Button>) : (
+              <Button onClick={subscribeToUser} className="bg-slate-800 border-none hover:bg-slate-800 text-white font-semibold rounded-sm mt-2 py-1">Subscribe</Button>
           )}
         </div>
       </div>

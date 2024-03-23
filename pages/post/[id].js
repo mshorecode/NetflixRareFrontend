@@ -1,15 +1,20 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable import/no-extraneous-dependencies */
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import {
-  Button, ButtonGroup, Container, Image,
+  Button, Container, Image,
 } from 'react-bootstrap';
 import Link from 'next/link';
+import { IoCreateOutline } from 'react-icons/io5';
+import { GoTrash } from 'react-icons/go';
+import moment from 'moment';
 import { useAuth } from '../../utils/context/authContext';
 import { getPostDetails, deletePost } from '../../api/postApi';
 import { getCategoryById } from '../../api/categoryApi';
 import { getUserById } from '../../api/userApi';
 import Reactions from '../../components/Reactions';
-import { removeTagFromPost } from '../../api/tagsAPI';
+import TagBadge from '../../components/TagBadge';
 
 export default function PostDetails() {
   const { user } = useAuth();
@@ -19,7 +24,7 @@ export default function PostDetails() {
   const [category, setCategory] = useState({});
   const [author, setAuthor] = useState({});
 
-  const deleteAPost = () => {
+  const deleteThePost = () => {
     if (window.confirm('Do you want to delete this post?')) {
       deletePost(post.id).then(() => router.push('/feed'));
     }
@@ -30,16 +35,8 @@ export default function PostDetails() {
     getUserById(post?.user_Id).then(setAuthor);
   };
 
-  const removeTag = (tagId) => {
-    if (user.id === author.id) {
-      const payload = {
-        post_Id: post.id,
-        tag_Id: tagId,
-      };
-      if (window.confirm('Do you want to remove this tag?')) {
-        removeTagFromPost(payload).then(router.push(`/post/${post.id}`));
-      }
-    }
+  const editPost = () => {
+    router.push(`/post/edit/${post.id}`);
   };
 
   useEffect(() => {
@@ -49,56 +46,55 @@ export default function PostDetails() {
   return (
     <Container className="p-4">
       <div className="flex flex-row justify-between items-center mb-4">
-
-        <div className="flex">
-          {user.id === author?.id
-            ? (
-              <ButtonGroup
-                className="justify-self-end"
-              >
-                <Button className="rounded-none mr-4" onClick={() => router.push(`/post/edit/${post.id}`)}>
-                  <span className="material-symbols-outlined">edit</span>
-                </Button>
-                <Button className="rounded-none" onClick={deleteAPost}>
-                  <span className="material-symbols-outlined">delete</span>
-                </Button>
-              </ButtonGroup>
-            ) : ''}
+        <div>
+          <h1 className="font-bold text-xl">{post?.title}</h1>
+          <div className="text-sm mt-2 flex gap-1">
+            <p className="text-slate-800 font-semibold">Publication Date:</p>
+            <p className="text-slate-700">{moment(post?.publication_Date).format('LL')}</p>
+          </div>
         </div>
-        <h1>{post?.title}</h1>
-        <p>{category?.label}</p>
-      </div>
-      <div className="flex flex-col items-center mb-4">
-        <div className="justify-center">
-          <Image
-            src={post?.image_Url}
-          />
-        </div>
-        <div className="place-self-end">
-          {post.tags?.map((t) => (
-            <Button
-              onClick={() => removeTag(t.id)}
-              id={`tag-${t.id}`}
-              key={t.id}
-            >
-              {t.label}
-            </Button>
+        <div className="flex-col">
+          {post.tags?.map((tag) => (
+            <TagBadge id={tag.id} />
           ))}
+          <p className="text-sm text-slate-700 mt-2 font-semibold">{category?.label}</p>
         </div>
+      </div>
+      <div className="flex justify-center">
+        <Image
+          src={post.image_Url}
+          alt={post.title}
+          layout="responsive"
+          className="object-cover my-4"
+        />
       </div>
       <div className="flex flex-row justify-between items-center mb-4">
-
-        <h5>By {author?.first_Name} {author?.last_Name}</h5>
-        <Link href={`/post/comments/${post.id}`} passHref>
-          <Button>
-            View Comments
-
-          </Button>
-        </Link>
+        <div>
+          <h5>{author?.first_name} {author?.last_name}</h5>
+        </div>
         <Reactions />
       </div>
       <div>
-        {post.content}
+        <p>{post?.content}</p>
+      </div>
+      <div className="flex justify-between mt-5">
+        {user?.id === author?.id && (
+        <div className="flex justify-start">
+          <Button type="button" onClick={editPost} className="background hover:bg-transparent text-black-100 font-semibold border-none">
+            <IoCreateOutline className="text-2xl text-indigo-500" />
+          </Button>
+          <Button type="button" onClick={deleteThePost} className="background hover:bg-transparent text-black-100 font-semibold border-none">
+            <GoTrash className="text-xl mt-1 text-red-500" />
+          </Button>
+        </div>
+        )}
+        <div className="flex justify-end">
+          <Link href={`/post/comments/${post.id}`} passHref>
+            <Button className="bg-slate-800 border-none hover:bg-slate-800 text-white font-semibold rounded-sm mt-1 py-1">
+              View Comments
+            </Button>
+          </Link>
+        </div>
       </div>
     </Container>
   );

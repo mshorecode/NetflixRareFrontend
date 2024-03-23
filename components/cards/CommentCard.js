@@ -1,6 +1,3 @@
-import {
-  Card, CardBody, CardSubtitle, CardText,
-} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import moment from 'moment';
@@ -13,18 +10,22 @@ export default function CommentCard({ comment }) {
 
   useEffect(() => {
     getUserById(comment.author_Id).then(setAuthor);
+    console.warn(author);
   }, []);
 
   return (
-    <Card>
-      <CardBody>
-        <CardText>
+    <div className="comment bg-inherit mt-40 p-3 border-t-slate-500 border-b-slate-500 rounded-none">
+      <p>
+        <h1 className="font-semibold text-lg">{author.first_Name} {author.last_Name}</h1>
+        <p className="my-2 text-md">
           {comment.content}
-        </CardText>
-        <CardSubtitle>- {author.first_Name} {author.last_Name}</CardSubtitle>
-        <CardSubtitle>{formattedDate}</CardSubtitle>
-      </CardBody>
-    </Card>
+        </p>
+        <h1 className="text-sm text-slate-800 font-semibold">
+          Created On:
+        </h1>
+        <h1 className="font-normal text-gray-700">{formattedDate}</h1>
+      </p>
+    </div>
   );
 }
 

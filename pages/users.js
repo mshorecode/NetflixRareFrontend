@@ -36,7 +36,7 @@ export default function Users() {
                 {user.first_Name} {user.last_Name}
               </p>
             </div>
-            <Button type="button" onClick={() => viewProfile(user.id)} className="bg-slate-800 border-slate-800 rounded-sm text-white">View Profile</Button>
+            <Button type="button" onClick={() => viewProfile(user.id)} className="bg-slate-800 border-none hover:bg-slate-800 text-white font-semibold rounded-sm mt-2">View Profile</Button>
           </div>
         ))}
       </div>
