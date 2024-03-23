@@ -79,6 +79,7 @@ export default function PostDetails() {
             <Button
               onClick={() => removeTag(t.id)}
               id={`tag-${t.id}`}
+              key={t.id}
             >
               {t.label}
             </Button>
