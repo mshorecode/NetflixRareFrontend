@@ -1,4 +1,5 @@
-import { Button } from 'react-bootstrap';
+import { Navbar } from 'react-bootstrap';
+import Link from 'next/link';
 import UserProfile from '../components/UserProfile';
 
 export default function Dashboard() {
@@ -7,9 +8,11 @@ export default function Dashboard() {
       <div>
         <UserProfile />
       </div>
-      <div className="flex-col">
-        <Button>Subscirbed Posts</Button>
-        <Button>My Posts</Button>
+      <div className="flex-col w-full">
+        <Navbar bg="dark" variant="dark" className="flex justify-evenly font-semibold text-white mt-4">
+          <Link href="/posts/new">Subscribed Posts</Link>
+          <Link href="/posts/new">My Posts</Link>
+        </Navbar>
       </div>
     </div>
   );

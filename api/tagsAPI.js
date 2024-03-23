@@ -48,6 +48,18 @@ const createTag = (payload) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const removeTagFromPost = (payload) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/api/posts/${payload.post_Id}/remove`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  }).then((response) => response.json())
+    .then((data) => resolve(data))
+    .catch(reject);
+});
+
 export {
-  getTags, getTagById, deleteTag, createTag,
+  getTags, getTagById, removeTagFromPost, deleteTag, createTag,
 };
