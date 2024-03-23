@@ -32,7 +32,8 @@ function Categorymanager() {
             {categories.map((cat) => (
               <tr>
                 <td> {cat.label}</td>
-                <td> <Button color="bg-red" id={cat.id} onClick={handleDelete}> Delete </Button> <Button color="bg-red"> Edit </Button></td>
+                <td> <Button className="bg-red-500 hover:bg-red-500 text-black-100 font-semibold py-2 px-4 border border-gray-400 rounded shadow" id={cat.id} onClick={handleDelete}> Delete </Button>
+                </td>
               </tr>
             ))}
           </tbody>

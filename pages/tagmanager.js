@@ -32,7 +32,8 @@ function Tagmanager() {
             {tags.map((tag) => (
               <tr>
                 <td> {tag.label}</td>
-                <td> <Button color="bg-red" id={tag.id} onClick={handleDelete}> Delete </Button> <Button color="bg-red"> Edit </Button></td>
+                <td> <Button className="bg-red-500 hover:bg-red-500 text-black-100 font-semibold py-2 px-4 border border-gray-400 rounded shadow" id={tag.id} onClick={handleDelete}> Delete </Button>
+                </td>
               </tr>
             ))}
           </tbody>
