@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
@@ -9,7 +12,6 @@ import {
   Image,
   Button,
   ButtonGroup,
-  Dropdown,
 } from 'react-bootstrap';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import moment from 'moment';
