@@ -54,7 +54,6 @@ function PostCard({ post, onUpdate }) {
           <div className="flex flex-row justify-between items-center">
             <CardText>{author?.first_Name} {author?.last_Name}</CardText>
             <div className="flex flex-row justify-end items-center">
-              <Reactions />
               {user.id === author?.id
                 ? (
                   <ButtonGroup
@@ -70,6 +69,7 @@ function PostCard({ post, onUpdate }) {
                 ) : ''}
             </div>
           </div>
+          <Reactions postId={post.id} postReactions={post.reactions} />
         </CardBody>
       </Card>
     </a>
@@ -91,6 +91,7 @@ PostCard.propTypes = {
       id: PropTypes.number,
       label: PropTypes.string,
     })),
+    reactions: PropTypes.arrayOf(),
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
 };

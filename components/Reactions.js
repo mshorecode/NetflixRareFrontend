@@ -4,10 +4,12 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 /* eslint-disable react/button-has-type */
 import React, { useState, useEffect } from 'react';
-import getReactions from '../api/reactionAPI';
+import PropTypes from 'prop-types';
+import { getReactions } from '../api/reactionAPI';
 
-function Reactions() {
+function Reactions({ postId, postReactions }) {
   const [allReactions, setAllReactions] = useState([]);
+  const [reactionChange, setReactionChange] = useState([]);
 
   const getAllTheReactions = () => {
     getReactions().then(setAllReactions);
@@ -15,21 +17,53 @@ function Reactions() {
 
   useEffect(() => {
     getAllTheReactions();
-  }, []);
+    console.warn(reactionChange);
+  }, [reactionChange]);
+
+  const handleReactionChange = (e) => {
+    const changeReactionNow = [postId, e.target.id];
+    setReactionChange(changeReactionNow);
+    // const payload = reactionChange;
+    // addReaction(payload[0], payload[1]).then(console.warn);
+    console.warn(reactionChange);
+  };
 
   return (
-    <div className="flex">
-      {allReactions.map((reaction) => (
-        <div x-data="{ isOpen: false }">
+    <>
+      <div className="flex justify-content-end">
+        {postReactions.map((reaction) => (
           <button
             className="text-gray-800 hover:bg-gray-200 font-bold p-2 rounded transition-colors duration-300"
+            id={reaction.id}
           >
             <img src={reaction.image_Url} height="16px" width="16px" />
           </button>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
+      <div className="flex">
+        {allReactions.map((reaction) => (
+          <div x-data="{ isOpen: false }">
+            <button
+              className="text-gray-800 hover:bg-gray-200 font-bold p-2 rounded transition-colors duration-300"
+              id={reaction.id}
+              onClick={handleReactionChange}
+            >
+              <img src={reaction.image_Url} height="16px" width="16px" />
+            </button>
+          </div>
+        ))}
+      </div>
+    </>
   );
 }
+
+Reactions.propTypes = {
+  postId: PropTypes.number.isRequired,
+  postReactions: PropTypes.arrayOf(),
+};
+
+Reactions.defaultProps = {
+  postReactions: [],
+};
 
 export default Reactions;

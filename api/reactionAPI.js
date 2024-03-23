@@ -13,4 +13,31 @@ const getReactions = () => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-export default getReactions;
+const addReaction = (postId, reactionId) => new Promise((resolve, reject) => {
+  fetch(`${clientCredentials}/post/addReaction`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(
+      {
+        post_Id: postId,
+        reactions_Id: reactionId,
+      },
+    ),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data) {
+        resolve(Object.values(data));
+      } else {
+        resolve([]);
+      }
+    })
+    .catch(reject);
+});
+
+export {
+  getReactions,
+  addReaction,
+};
