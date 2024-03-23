@@ -36,14 +36,14 @@ function PostCard({ post, onUpdate }) {
   const formattedDate = moment(post.publication_Date).format('LL');
 
   return (
-    <a
-      href={`/post/${post.id}`}
-      className="flex flex-col"
+
+    <Card
+      className="mb-2 flex flex-col basis-1"
     >
-      <Card
-        className="mb-2 flex flex-col basis-1"
-      >
-        <CardBody>
+      <CardBody>
+        <a
+          href={`/post/${post.id}`}
+        >
           <div className="flex flex-row justify-between">
             <CardTitle>{post.title}</CardTitle>
             <CardText>{formattedDate}</CardText>
@@ -51,28 +51,29 @@ function PostCard({ post, onUpdate }) {
           <div className="flex justify-center">
             {post.image_Url ? (<Image src={post.image_Url} />) : ''}
           </div>
-          <div className="flex flex-row justify-between items-center">
-            <CardText>{author?.first_Name} {author?.last_Name}</CardText>
-            <div className="flex flex-row justify-end items-center">
-              {user.id === author?.id
-                ? (
-                  <ButtonGroup
-                    className="justify-self-end ml-4"
-                  >
-                    <Button className="rounded-none mr-4" onClick={() => router.push(`/post/edit/${post.id}`)}>
-                      <span className="material-symbols-outlined">edit</span>
-                    </Button>
-                    <Button className="rounded-none" onClick={deleteAPost}>
-                      <span className="material-symbols-outlined">delete</span>
-                    </Button>
-                  </ButtonGroup>
-                ) : ''}
-            </div>
+        </a>
+
+        <div className="flex flex-row justify-between items-center">
+          <CardText>{author?.first_Name} {author?.last_Name}</CardText>
+          <div className="flex flex-row justify-end items-center">
+            {user.id === author?.id
+              ? (
+                <ButtonGroup
+                  className="justify-self-end ml-4"
+                >
+                  <Button className="rounded-none mr-4" onClick={() => router.push(`/post/edit/${post.id}`)}>
+                    <span className="material-symbols-outlined">edit</span>
+                  </Button>
+                  <Button className="rounded-none" onClick={deleteAPost}>
+                    <span className="material-symbols-outlined">delete</span>
+                  </Button>
+                </ButtonGroup>
+              ) : ''}
           </div>
-          <Reactions postId={post.id} postReactions={post.reactions} />
-        </CardBody>
-      </Card>
-    </a>
+        </div>
+        <Reactions postId={post.id} postReactions={post.reactions} />
+      </CardBody>
+    </Card>
 
   );
 }
