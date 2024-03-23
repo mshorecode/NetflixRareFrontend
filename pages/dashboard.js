@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Button, Navbar } from 'react-bootstrap';
 import UserProfile from '../components/UserProfile';
-import PostForm from '../components/forms/PostForm';
-import PostCard from '../components/cards/PostCard';
+import MyPosts from '../components/MyPosts';
+import Tagmanager from './tagmanager';
+import Categorymanager from './categorymanager';
 
 export default function Dashboard() {
   const { pathname } = useRouter();
@@ -14,6 +15,10 @@ export default function Dashboard() {
       setActiveComponent('subscribed');
     } else if (pathname.includes('/dashboard/my-posts')) {
       setActiveComponent('my-posts');
+    } else if (pathname.includes('/dashboard/categorymanager')) {
+      setActiveComponent('categorymanager');
+    } else if (pathname.includes('/dashboard/tagmanager')) {
+      setActiveComponent('tagmanager');
     }
   }, [pathname]);
 
@@ -23,17 +28,19 @@ export default function Dashboard() {
         <UserProfile />
       </div>
       <div className="flex-col w-full">
-        <Navbar bg="dark" variant="dark" className="flex justify-evenly font-semibold text-white mt-4">
-          <Button onClick={() => setActiveComponent('subscribed')}>Subscribed Posts</Button>
-          <Button onClick={() => setActiveComponent('my-posts')}>My Posts</Button>
+        <Navbar bg="dark" variant="dark" className="flex justify-evenly mt-4 rounded-sm">
+          <Button onClick={() => setActiveComponent('my-posts')} className="text-white font-semibold border-none bg-transparent">My Posts</Button>
+          <Button onClick={() => setActiveComponent('subscribed')} className="text-white font-semibold border-none bg-transparent">Subscribed Posts</Button>
+          <Button onClick={() => setActiveComponent('tagmanager')} className="text-white font-semibold border-none bg-transparent">Tag Manager</Button>
+          <Button onClick={() => setActiveComponent('categorymanager')} className="text-white font-semibold border-none bg-transparent">Category Manager</Button>
         </Navbar>
         <div className="flex-col w-full">
-          {ActiveComponent === 'subscribed' && <PostCard />}
-          {ActiveComponent === 'my-posts' && <PostForm />}
+          {ActiveComponent === 'my-posts' && <MyPosts />}
+          {ActiveComponent === 'subscribed' && <MyPosts />}
+          {ActiveComponent === 'tagmanager' && <Tagmanager />}
+          {ActiveComponent === 'categorymanager' && <Categorymanager />}
         </div>
       </div>
     </div>
   );
 }
-
-// TODO: Render a list of posts based on the user's subscription and their posts

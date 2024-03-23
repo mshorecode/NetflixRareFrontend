@@ -26,9 +26,9 @@ function TagForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="w-full" onSubmit={handleSubmit}>
       <div className="space-y-12">
-        <div className="border-b border-gray-900/10 pb-12">
+        <div className="pb-12">
           <h2 className="text-base font-semibold leading-7 text-gray-900">Create a Tag</h2>
           <p className="mt-1 text-sm leading-6 text-gray-600">
             Tags are used to categorize content length.
@@ -39,13 +39,13 @@ function TagForm() {
                 Tag Name
               </label>
               <div className="mt-2">
-                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md mb-4">
+                <div className="flex ring-gray-300 focus-within:ring-2 focus-within:ring-inset sm:max-w-md mb-4">
                   <input
                     type="text"
                     name="label"
                     id="label"
                     autoComplete="label"
-                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                    className="block flex-1 border-b border-slate-500 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 sm:text-sm sm:leading-6"
                     value={formInput.label}
                     onChange={handleChange}
                     placeholder="Name"

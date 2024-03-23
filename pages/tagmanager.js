@@ -1,5 +1,8 @@
+/* eslint-disable jsx-a11y/control-has-associated-label */
+/* eslint-disable import/no-extraneous-dependencies */
 import React, { useState, useEffect } from 'react';
 import { Table, Button } from 'react-bootstrap';
+import { GoTrash } from 'react-icons/go';
 import { deleteTag, getTags } from '../api/tagsAPI';
 import TagForm from '../components/forms/TagForm';
 
@@ -16,30 +19,36 @@ function Tagmanager() {
 
   const handleDelete = (e) => {
     deleteTag(e.target.id).then(setTags);
+    console.warn('Deleted tag with id:', e.target.id);
   };
 
   return (
-    <div className="grid grid-cols-2 gap-4 py-4">
+    <div className="grid grid-cols-2 gap-4 py-4 w-full">
       <div className="display: flex;">
         <Table className="table-auto">
           <thead>
             <tr>
-              <th>Tags</th>
-              <th>Actions</th>
+              <th className="background">Tags</th>
+              <th className="background">Actions</th>
             </tr>
           </thead>
           <tbody>
             {tags.map((tag) => (
               <tr>
-                <td> {tag.label}</td>
-                <td> <Button className="bg-red-500 hover:bg-red-500 text-black-100 font-semibold py-2 px-4 border border-gray-400 rounded shadow" id={tag.id} onClick={handleDelete}> Delete </Button>
+                <td className="background">
+                  {tag.label}
+                </td>
+                <td className="background">
+                  <Button className="background hover:bg-transparent text-black-100 font-semibold border-none rounded-sm mx-auto" onClick={handleDelete}>
+                    <GoTrash id={tag.id} className="text-red-500" />
+                  </Button>
                 </td>
               </tr>
             ))}
           </tbody>
         </Table>
       </div>
-      <div className="flex">
+      <div className="flex mx-auto">
         <TagForm />
       </div>
     </div>

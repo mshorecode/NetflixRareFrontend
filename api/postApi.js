@@ -23,6 +23,17 @@ const getPostDetails = (id) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const getUserPosts = (id) => new Promise((resolve, reject) => {
+  fetch(`${endpoint}/api/posts/user/${id}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).then((response) => response.json())
+    .then((data) => resolve(data))
+    .catch(reject);
+});
+
 const createPost = (payload) => new Promise((resolve, reject) => {
   fetch(`${endpoint}/api/posts/new`, {
     method: 'POST',
@@ -60,5 +71,5 @@ const deletePost = (id) => new Promise((resolve, reject) => {
 });
 
 export {
-  getPostDetails, getAllPosts, createPost, editPost, deletePost,
+  getPostDetails, getAllPosts, getUserPosts, createPost, editPost, deletePost,
 };

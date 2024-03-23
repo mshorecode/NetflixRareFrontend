@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import moment from 'moment';
+import { Button } from 'react-bootstrap';
 import { useAuth } from '../utils/context/authContext';
 
 export default function UserProfile() {
@@ -46,6 +47,11 @@ export default function UserProfile() {
         <p className="text-md ml-3">
           {user.is_Staff ? 'Admin' : 'User'}
         </p>
+      </div>
+      <div>
+        <Button type="button" className="bg-slate-800 border-none hover:bg-slate-800 text-white font-bold rounded-sm mt-4">
+          Edit Profile
+        </Button>
       </div>
     </div>
   );

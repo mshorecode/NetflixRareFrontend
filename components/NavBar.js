@@ -6,6 +6,7 @@ import {
   Navbar,
   Nav,
 } from 'react-bootstrap';
+import { IoCreateOutline } from 'react-icons/io5';
 import UserMenu from './UserMenu';
 
 export default function NavBar() {
@@ -15,21 +16,17 @@ export default function NavBar() {
         <Navbar.Brand>Rare Posts</Navbar.Brand>
       </div>
       <div className="flex right-nav fw-semibold">
-        <Nav>
+        <Nav className="gap-1">
           <Link passHref href="/users">
-            <Nav.Link className="pt-[10px] text-xl">Authors</Nav.Link>
+            <Nav.Link className="pt-[11px] text-xl">Authors</Nav.Link>
           </Link>
           <Link passHref href="/feed">
-            <Nav.Link className="pt-[10px] text-xl">Posts</Nav.Link>
+            <Nav.Link className="pt-[11px] text-xl">Posts</Nav.Link>
           </Link>
           <Link passHref href="/post/new">
-            <Nav.Link className="pt-[10px] text-xl">Create Post</Nav.Link>
-          </Link>
-          <Link passHref href="/tagmanager">
-            <Nav.Link className="pt-[20px] text-xl">Tag Manager</Nav.Link>
-          </Link>
-          <Link passHref href="/categorymanager">
-            <Nav.Link className="pt-[20px] text-xl">Category Manager</Nav.Link>
+            <Nav.Link className="pt-[11px] text-xl flex gap-1">
+              <IoCreateOutline className="w-6 h-6 mt-[2px]" /> Create
+            </Nav.Link>
           </Link>
         </Nav>
         <UserMenu />
